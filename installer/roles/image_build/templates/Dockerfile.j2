@@ -123,6 +123,13 @@ RUN find /var/lib/awx -not -path '/var/lib/awx/venv*' | xargs chgrp root && \
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
+RUN cd /tmp && \
+    curl -LO https://github.com/smallstep/cli/releases/download/v0.14.2/step_linux_0.14.2_amd64.tar.gz && \
+    tar -xzf step_linux_0.14.2_amd64.tar.gz && \
+    mv step_0.14.2/bin/step /usr/local/bin/ && \
+    rm -rf step_0.14.2 && \
+    rm step_linux_0.14.2_amd64.tar.gz
+
 RUN dnf -y clean all && rm -rf /root/.cache rm -rf /tmp/*
 
 ENV HOME=/home/awx
