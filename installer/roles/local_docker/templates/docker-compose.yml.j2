@@ -40,7 +40,7 @@ services:
     {% endif %}
     {% if (ssh_key is defined) and (ssh_certificate is defined)  %}
       - "{{ ssh_key +':/root/.ssh/id_ecdsa_awx:ro' }}"
-      - "{{ ssh_certificate +':/root/.ssh/id_ecdsa_awx-cert:ro' }}"
+      - "{{ ssh_certificate +':/root/.ssh/id_ecdsa_awx-cert.pub:ro' }}"
     {% endif %}
     {% if use_custom_ssh_config is defined %}
       - "{{ docker_compose_dir }}/ssh/config:/root/.ssh/config:rw"
