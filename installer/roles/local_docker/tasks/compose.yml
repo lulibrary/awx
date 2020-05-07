@@ -29,6 +29,16 @@
     - redis.conf
   register: awx_compose_config
 
+- name: Create Docker Compose SSH Configuration
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ docker_compose_dir }}/{ item }}"
+    mode: 0600
+  with_items:
+    - ssh/known_hosts
+    - ssh/config
+  when: use_custom_ssh_config is defined
+
 - name: Set redis config to other group readable to satisfy redis-server
   file:
     path: "{{ docker_compose_dir }}/redis.conf"

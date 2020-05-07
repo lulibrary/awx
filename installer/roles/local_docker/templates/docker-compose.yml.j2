@@ -38,6 +38,14 @@ services:
     {% if ca_trust_dir is defined %}
       - "{{ ca_trust_dir +':/etc/pki/ca-trust/source/anchors:ro' }}"
     {% endif %}
+    {% if (ssh_key is defined) and (ssh_certificate is defined)  %}
+      - "{{ ssh_key +':/root/.ssh/id_ecdsa_awx:ro' }}"
+      - "{{ ssh_certificate +':/root/.ssh/id_ecdsa_awx-cert:ro' }}"
+    {% endif %}
+    {% if use_custom_ssh_config is defined %}
+      - "{{ docker_compose_dir }}/ssh/config:/root/.ssh/config:rw"
+      - "{{ docker_compose_dir }}/ssh/known_hosts:/root/.ssh/known_hosts:rw"
+    {% endif %}
     {% if (ssl_certificate is defined) and (ssl_certificate_key is defined) %}
       - "{{ ssl_certificate +':/etc/nginx/awxweb.pem:ro' }}"
       - "{{ ssl_certificate_key +':/etc/nginx/awxweb_key.pem:ro' }}"
