@@ -37,6 +37,7 @@
   with_items:
     - ssh/known_hosts
     - ssh/config
+  register: awx_compose_config
   when: use_custom_ssh_config is defined
 
 - name: Set redis config to other group readable to satisfy redis-server
